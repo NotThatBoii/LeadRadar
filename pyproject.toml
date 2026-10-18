@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "leadradar"
+version = "0.1.0"
+description = "A responsible, provenance-aware B2B business list builder"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{name = "Philip Paglinawan"}]
+dependencies = [
+  "beautifulsoup4>=4.13,<5", "httpx>=0.28,<1", "pandas>=2.2,<4",
+  "playwright>=1.50,<2", "pydantic>=2.10,<3", "typer>=0.15,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "build>=1.2,<2"]
+
+[project.scripts]
+leadradar = "leadradar.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/leadradar"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["browser: requires installed Playwright Chromium (local fixture only)"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
